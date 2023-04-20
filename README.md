@@ -15,3 +15,8 @@ Pour lancer l'interface graphique avec React, rendez-vous dans le dossier 'front
 cd frontend
 npm start
 ```
+
+### COULEURS DU SITE
+Primare : #A5D0A8
+Secondaire : #8CADA7
+Tertaire : #114B5F
