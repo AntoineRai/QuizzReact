@@ -5,7 +5,8 @@ import './home.css'
 export default function Home(){
     return (
         <div className="container-home">
-          <h1>Logo de l'application</h1>
+          <img src='logo.png' alt='logo-presque-comme-react' className='rotateImg'/>
+          <h1>Quizz Culture</h1>
           <Link to="/category"><button className="btn">Jouer</button></Link>
           <Link to="/signin"></Link><button className="btn">S'inscrire</button>
           <Link to="/signup"></Link><button className="btn">Se connecter</button>

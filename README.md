@@ -17,6 +17,7 @@ npm start
 ```
 
 ### COULEURS DU SITE
-Primare : #A5D0A8
-Secondaire : #8CADA7
-Tertaire : #114B5F
+Voici les couleurs utilisées par le site:
+* Primare : #A5D0A8
+* Secondaire : #8CADA7
+* Tertaire : #114B5F
