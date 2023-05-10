@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import "./category.css";
+import "./questions.css";
 import Loading from "../../layout/loading/loading";
 
 function filterByCategorie(questions, categorie) {
   return questions.filter((question) => question.categorie === categorie);
 }
 
-export default function Questions(categorie) {
+export default function Questions({ categorie }) {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -21,17 +21,30 @@ export default function Questions(categorie) {
       .catch((error) =>
         console.error("Erreur lors du fetch des questions:", error)
       );
-    filterByCategorie(questions, categorie);
   }, []);
+
+  const filteredQuestions = filterByCategorie(questions, categorie);
 
   return (
     <div className="container-questions">
-        {loading ? (
-            <Loading />
-        ) : (
-            //TODO: Afficher les questions de la catégorie sélectionnée
-            <h1>Les questions</h1>
-        )}
+      <h1>Les questions de la catégorie "{categorie}"</h1>
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className="questions-list">
+          {filteredQuestions.map((question) => (
+            <div className="question" key={question.id}>
+              <p>{question.question}</p>
+              <ul className="answers-list">
+                <li>{question.reponse1}</li>
+                <li>{question.reponse2}</li>
+                <li>{question.reponse3}</li>
+                <li>{question.reponse4}</li>
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

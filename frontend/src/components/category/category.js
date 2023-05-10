@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./category.css";
 import Loading from "../../layout/loading/loading";
 
@@ -28,7 +29,12 @@ export default function Category() {
         ) : (
           categories.map((category) => (
             <li key={category.id}>
-              <button className="category-button">{category.categorie}</button>
+              <Link to={`/questions/${category.categorie}`}>
+                {" "}
+                <button className="category-button">
+                  {category.categorie}
+                </button>
+              </Link>
             </li>
           ))
         )}
