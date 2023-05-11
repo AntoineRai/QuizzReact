@@ -8,7 +8,8 @@ function filterByCategorie(questions, categorie) {
 
 export default function Questions({ categorie }) {
   const [questions, setQuestions] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [currentQuestion, setCurrentQuestion] = useState([]);
+ const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Fetch des données depuis l'API
@@ -23,27 +24,39 @@ export default function Questions({ categorie }) {
       );
   }, []);
 
-  const filteredQuestions = filterByCategorie(questions, categorie);
+  let filteredQuestions = filterByCategorie(questions, categorie);
+  useEffect(() => {
+      
+      setCurrentQuestion(filteredQuestions[0]);    
+      setCurrentQuestion(filteredQuestions[0]);  
+      console.log("Filter UseEffect" + filteredQuestions[0]);
+  }, [filteredQuestions]);
+
+  console.log("Filter " + filteredQuestions)
+  console.log("Current " + currentQuestion)
+  console.log("Current with filter" + filteredQuestions[0])
+
+  let lengthOfQuestions = filteredQuestions.length;
+  let currentIndexOfQuestions = 0;
 
   return (
     <div className="container-questions">
-      <h1>Les questions de la catégorie "{categorie}"</h1>
+      <p>Vous allez répondre à : {lengthOfQuestions} questions</p>
+
+      <p>
+        Vous êtes à la question : {currentIndexOfQuestions + 1} /{" "}
+        {lengthOfQuestions}
+      </p>
       {loading ? (
-        <Loading />
+      <Loading />
       ) : (
-        <div className="questions-list">
-          {filteredQuestions.map((question) => (
-            <div className="question" key={question.id}>
-              <p>{question.question}</p>
-              <ul className="answers-list">
-                <li>{question.reponse1}</li>
-                <li>{question.reponse2}</li>
-                <li>{question.reponse3}</li>
-                <li>{question.reponse4}</li>
-              </ul>
-            </div>
-          ))}
-        </div>
+      <div className="question">
+        <p>{currentQuestion.question}</p>
+        <button handleClick={() => {}}>{currentQuestion.response1}</button>
+        <button handleClick={() => {}}>{currentQuestion.response2}</button>
+        <button handleClick={() => {}}>{currentQuestion.response}</button>
+        <button handleClick={() => {}}>{currentQuestion.response4}</button>
+      </div>
       )}
     </div>
   );
