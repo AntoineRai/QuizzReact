@@ -5,13 +5,28 @@
   flex-direction: column;
 }
 
-.questions-list {
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 0;
+.reponses {
+  display: flex;
+  flex-direction: column;
 }
 
-.answers-list {
-  list-style-type: none;
+.reponses > button {
+  background-color: #8CADA7;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-bottom: 5vh;
+  transition: all ease-in-out 0.3s;
+}
+
+.reponses > button:hover {
+  background-color: #708a86;
+}
+
+.question {
+  text-align: center;
 }

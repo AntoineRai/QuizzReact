@@ -5,5 +5,8 @@ import { useParams } from "react-router-dom";
 export default function QuestionPage() {
   const { categorie } = useParams();
 
-  return <Question categorie={categorie} />;
+  return (
+  <>
+  <Question categorie={categorie} />
+  </>);
 }
