@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./questions.css";
 import Loading from "../../layout/loading/loading";
 
@@ -10,6 +10,9 @@ export default function Questions({ categorie }) {
   const [showResult, setShowResult] = useState(false);
   const [showNextQuestionButton, setShowNextQuestionButton] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(20);
+  const timerRef = useRef(null);
+  const [allAnswers, setAllAnswers] = useState([]);
 
   function filterByCategorie(questions, categorie) {
     return questions.filter((question) => question.categorie === categorie);
@@ -32,6 +35,7 @@ export default function Questions({ categorie }) {
     if (answer === questions[currentQuestionIndex].reponse1) {
       setScore(score + 1);
     }
+    clearTimeout(timerRef.current);
     setShowNextQuestionButton(true);
   }
 
@@ -42,6 +46,7 @@ export default function Questions({ categorie }) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setShowNextQuestionButton(false);
       setSelectedAnswer(null);
+      setTimeLeft(20);
     }
   }
 
@@ -56,6 +61,40 @@ export default function Questions({ categorie }) {
         console.error("Erreur lors du fetch des questions:", error)
       );
   }, []);
+
+  useEffect(() => {
+    if (currentQuestionIndex < questions.length) {
+      setTimeLeft(20);
+      setAllAnswers(
+        shuffleArray([
+          questions[currentQuestionIndex].reponse2,
+          questions[currentQuestionIndex].reponse3,
+          questions[currentQuestionIndex].reponse4,
+          questions[currentQuestionIndex].reponse5,
+          questions[currentQuestionIndex].reponse6,
+          questions[currentQuestionIndex].reponse7,
+          questions[currentQuestionIndex].reponse8,
+          questions[currentQuestionIndex].reponse9,
+          questions[currentQuestionIndex].reponse10,
+        ])
+          .slice(0, 3)
+          .concat(questions[currentQuestionIndex].reponse1)
+      );
+      timerRef.current = setInterval(() => {
+        setTimeLeft((prevTime) => {
+          if (prevTime === 1) {
+            clearTimeout(timerRef.current);
+            setShowNextQuestionButton(true);
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
+    }
+
+    return () => {
+      clearTimeout(timerRef.current);
+    };
+  }, [currentQuestionIndex, questions]);
 
   if (loading) {
     return <Loading />;
@@ -73,29 +112,12 @@ export default function Questions({ categorie }) {
   }
 
   const currentQuestion = questions[currentQuestionIndex];
-  const otherAnswers = shuffleArray([
-    currentQuestion.reponse2,
-    currentQuestion.reponse3,
-    currentQuestion.reponse4,
-    currentQuestion.reponse5,
-    currentQuestion.reponse6,
-    currentQuestion.reponse7,
-    currentQuestion.reponse8,
-    currentQuestion.reponse9,
-    currentQuestion.reponse10,
-  ]).slice(0, 3);
-  const randomPosition = Math.floor(Math.random() * 4);
-  const allAnswers = [
-    ...otherAnswers.slice(0, randomPosition),
-    currentQuestion.reponse1,
-    ...otherAnswers.slice(randomPosition)
-  ];
 
   return (
     <div className="container-questions">
       <h3>Question {currentQuestionIndex + 1}</h3>
       <p>{currentQuestion.question}</p>
-      {selectedAnswer === null && (
+      {selectedAnswer === null && timeLeft > 0 && (
         <div className="button-container">
           {allAnswers.map((answer, index) => (
             <button
@@ -113,14 +135,33 @@ export default function Questions({ categorie }) {
           {selectedAnswer === currentQuestion.reponse1 ? (
             <p>Bonne réponse !</p>
           ) : (
-            <p>
-              Mauvaise réponse. La bonne réponse était {currentQuestion.reponse1}.
-            </p>
+            <>
+              <p>
+                Mauvaise réponse. La bonne réponse était{" "}
+                {currentQuestion.reponse1}.
+              </p>
+              <button onClick={handleNextQuestionClick}>
+                Question suivante
+              </button>
+            </>
           )}
-          <button onClick={handleNextQuestionClick}>
-            Question suivante
-          </button>
+          {selectedAnswer === currentQuestion.reponse1 && (
+            <button onClick={handleNextQuestionClick}>Question suivante</button>
+          )}
         </>
+      )}
+      {selectedAnswer === null && timeLeft === 0 && (
+        <>
+          <p>
+            Temps écoulé ! La bonne réponse était {currentQuestion.reponse1}.
+          </p>
+          <button onClick={handleNextQuestionClick}>Question suivante</button>
+        </>
+      )}
+      {selectedAnswer === null && timeLeft > 0 && (
+        <div>
+          Temps restant : {timeLeft} seconde{timeLeft !== 1 ? "s" : ""}
+        </div>
       )}
     </div>
   );

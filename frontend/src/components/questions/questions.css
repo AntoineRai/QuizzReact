@@ -11,15 +11,17 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
+  margin: 25px;
 }
 
 .answer-button {
-  padding: 10px 20px;
+  padding: 10px 50px;
   border: none;
   border-radius: 20px;
   background-color: #739276;
   color: #fff;
   cursor: pointer;
+  width: 40%;
 }
 
 .answer-button.selected {
