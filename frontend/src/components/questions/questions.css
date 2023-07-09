@@ -3,30 +3,35 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  height: 100vh;
 }
 
-.reponses {
+.button-container {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 }
 
-.reponses > button {
-  background-color: #8CADA7;
+.answer-button {
+  padding: 10px 20px;
   border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  border-radius: 5px;
-  margin-bottom: 5vh;
-  transition: all ease-in-out 0.3s;
+  border-radius: 20px;
+  background-color: #739276;
+  color: #fff;
+  cursor: pointer;
 }
 
-.reponses > button:hover {
-  background-color: #708a86;
+.answer-button.selected {
+  background-color: #739276;
 }
 
-.question {
-  text-align: center;
+button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  background-color: #739276;
+  color: #fff;
+  cursor: pointer;
 }
