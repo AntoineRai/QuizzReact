@@ -5,11 +5,8 @@ import "./signup.css";
 export default function LoginForm({ users }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedInUser, setLoggedInUser] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
-
-  //TODO : Si l'utilisateur est déjà connecté, afficher un message l'invitant à se déconnecter
-
+  
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -28,11 +25,9 @@ export default function LoginForm({ users }) {
           (user) => user.email === email && user.password === password
         );
         if (user) {
-          setLoggedInUser(user);
           setErrorMessage("");
           localStorage.setItem("user", JSON.stringify(user));
         } else {
-          setLoggedInUser(null);
           setErrorMessage("Identifiants de connexion incorrects");
         }
         setEmail("");
@@ -45,6 +40,24 @@ export default function LoginForm({ users }) {
         );
       });
   };
+
+  const handleLogOut = () => {
+    localStorage.removeItem("user");
+  };
+
+  const isLoggedIn = localStorage.getItem("user");
+
+  if (isLoggedIn) {
+    return (
+      <div className="signup-container">
+        <Link to="/">
+          <button>Retourner à l'accueil</button>
+        </Link>
+        <h3>Vous êtes déjà connecté</h3>
+        <button onClick={handleLogOut}>Déconnectez-vous</button>
+      </div>
+    );
+  }
 
   return (
     <div className="signup-container">
@@ -74,7 +87,6 @@ export default function LoginForm({ users }) {
         <button type="submit">Se connecter</button>
       </form>
       {errorMessage && <p>{errorMessage}</p>}
-      {loggedInUser && <p>Connecté en tant que {loggedInUser.email}</p>}
     </div>
   );
 }
