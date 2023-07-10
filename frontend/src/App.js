@@ -3,7 +3,8 @@ import HomePage from "./pages/HomePage";
 import "./App.css";
 import CategoryPage from "./pages/CategoryPage";
 import QuestionPage from "./pages/QuestionPage";
-import ResultPage from "./pages/ResultPage";
+import SignInPage from "./pages/SignInPage";
+import SignUpPage from "./pages/SignUpPage";
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/category" element={<CategoryPage />} />
         <Route path="/questions/:categorie" element={<QuestionPage />} />
-        <Route path="/result/:score" element={<ResultPage />} />
+        <Route path="/signin" element={<SignInPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
       </Routes>
     </Router>
   );

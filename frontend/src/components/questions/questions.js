@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import "./questions.css";
 import Loading from "../../layout/loading/loading";
 
@@ -65,21 +66,22 @@ export default function Questions({ categorie }) {
   useEffect(() => {
     if (currentQuestionIndex < questions.length) {
       setTimeLeft(20);
-      setAllAnswers(
-        shuffleArray([
-          questions[currentQuestionIndex].reponse2,
-          questions[currentQuestionIndex].reponse3,
-          questions[currentQuestionIndex].reponse4,
-          questions[currentQuestionIndex].reponse5,
-          questions[currentQuestionIndex].reponse6,
-          questions[currentQuestionIndex].reponse7,
-          questions[currentQuestionIndex].reponse8,
-          questions[currentQuestionIndex].reponse9,
-          questions[currentQuestionIndex].reponse10,
-        ])
-          .slice(0, 3)
-          .concat(questions[currentQuestionIndex].reponse1)
-      );
+      const shuffledAnswers = shuffleArray([
+        questions[currentQuestionIndex].reponse2,
+        questions[currentQuestionIndex].reponse3,
+        questions[currentQuestionIndex].reponse4,
+        questions[currentQuestionIndex].reponse5,
+        questions[currentQuestionIndex].reponse6,
+        questions[currentQuestionIndex].reponse7,
+        questions[currentQuestionIndex].reponse8,
+        questions[currentQuestionIndex].reponse9,
+        questions[currentQuestionIndex].reponse10,
+      ])
+        .slice(0, 3)
+        .concat(questions[currentQuestionIndex].reponse1);
+
+      setAllAnswers(shuffleArray(shuffledAnswers));
+
       timerRef.current = setInterval(() => {
         setTimeLeft((prevTime) => {
           if (prevTime === 1) {
@@ -100,6 +102,7 @@ export default function Questions({ categorie }) {
     return <Loading />;
   }
 
+  //TODO : Si l'utilisateur est connecté, proposer d'enregistrer le score en base de données
   if (showResult) {
     return (
       <div className="container-questions">
@@ -107,6 +110,9 @@ export default function Questions({ categorie }) {
           Fin du quizz, vous avez eu {score}/{questions.length} bonne(s)
           réponse(s).
         </p>
+        <Link to="/">
+          <button>Retourner à l'accueil</button>
+        </Link>
       </div>
     );
   }

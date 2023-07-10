@@ -14,10 +14,12 @@ export default function Home() {
       <Link to="/category">
         <button className="btn">Jouer</button>
       </Link>
-      <Link to="/signin"></Link>
-      <button className="btn">S'inscrire</button>
-      <Link to="/signup"></Link>
-      <button className="btn">Se connecter</button>
+      <Link to="/signin">
+        <button className="btn">S'inscrire</button>
+      </Link>
+      <Link to="/signup">
+        <button className="btn">Se connecter</button>
+      </Link>
     </div>
   );
 }
