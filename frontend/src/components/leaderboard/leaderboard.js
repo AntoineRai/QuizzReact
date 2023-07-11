@@ -14,9 +14,10 @@ export default function Leaderboard() {
       </Link>
       <h2>Leaderboard</h2>
       <ul>
+        {scores.length === 0 && <p>Aucun score enregistré</p>}
         {scores.map((scoreData, index) => (
           <li key={index}>
-            <span>{scoreData.score}</span>
+            <span>Score : {scoreData.score}</span>
             <span>{scoreData.user}</span>
             <span>{scoreData.categorie}</span>
             <span>{scoreData.date}</span>

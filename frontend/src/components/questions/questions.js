@@ -71,7 +71,7 @@ export default function Questions({ categorie }) {
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
-        setQuestions(filterByCategorie(data, categorie).slice(0, 4));
+        setQuestions(filterByCategorie(data, categorie));
       })
       .catch((error) =>
         console.error("Erreur lors du fetch des questions:", error)
