@@ -6,7 +6,8 @@ export default function QuestionPage() {
   const { categorie } = useParams();
 
   return (
-  <>
-  <Question categorie={categorie} />
-  </>);
+    <>
+      <Question categorie={categorie} />
+    </>
+  );
 }

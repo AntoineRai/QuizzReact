@@ -1,10 +1,10 @@
-import React from 'react'
-import Category from '../components/category/category'
+import React from "react";
+import Category from "../components/category/category";
 
-export default function CategoryPage(){
-    return (
-        <>
-        <Category/>
-        </>
-    )
+export default function CategoryPage() {
+  return (
+    <>
+      <Category />
+    </>
+  );
 }

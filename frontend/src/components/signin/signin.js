@@ -50,7 +50,7 @@ export default function SignupForm() {
   return (
     <div className="container-signin">
       <Link to="/">
-      <button>Retourner à l'accueil</button>
+        <button>Retourner à l'accueil</button>
       </Link>
       <h3>Inscription</h3>
       <form onSubmit={handleSubmit}>
