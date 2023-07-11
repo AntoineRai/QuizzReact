@@ -20,6 +20,9 @@ export default function Home() {
       <Link to="/signup">
         <button className="btn">Se connecter</button>
       </Link>
+      <Link to="/leaderboard">
+        <button className="btn">Tableau des scores</button>
+      </Link>
     </div>
   );
 }

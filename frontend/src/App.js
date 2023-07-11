@@ -5,6 +5,7 @@ import CategoryPage from "./pages/CategoryPage";
 import QuestionPage from "./pages/QuestionPage";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
+import LeaderboardPage from "./pages/LeaderboardPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/questions/:categorie" element={<QuestionPage />} />
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/leaderboard" element={<LeaderboardPage />} />
       </Routes>
     </Router>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./signup.css";
 
@@ -6,7 +6,7 @@ export default function LoginForm({ users }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  
+
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
   };
@@ -54,6 +54,7 @@ export default function LoginForm({ users }) {
           <button>Retourner à l'accueil</button>
         </Link>
         <h3>Vous êtes déjà connecté</h3>
+        {<p>{JSON.parse(isLoggedIn).email}</p>}
         <button onClick={handleLogOut}>Déconnectez-vous</button>
       </div>
     );

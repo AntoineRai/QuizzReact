@@ -51,6 +51,21 @@ export default function Questions({ categorie }) {
     }
   }
 
+  function handleRegisterScore() {
+    const scoreData = {
+      score: score,
+      user: JSON.parse(isLoggedIn).name,
+      categorie: categorie,
+      date: new Date().toLocaleDateString(),
+    };
+
+    const previousScores = JSON.parse(localStorage.getItem("score")) || [];
+
+    const updatedScores = [...previousScores, scoreData];
+
+    localStorage.setItem("score", JSON.stringify(updatedScores));
+  }
+
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/questions")
       .then((response) => response.json())
@@ -98,18 +113,26 @@ export default function Questions({ categorie }) {
     };
   }, [currentQuestionIndex, questions]);
 
+  const currentQuestion = questions[currentQuestionIndex];
+
   if (loading) {
-    return <Loading />;
+    return (
+      <div className="container-questions">
+        <Loading />
+      </div>
+    );
   }
 
-  //TODO : Si l'utilisateur est connecté, proposer d'enregistrer le score en base de données
-  if (showResult) {
+  const isLoggedIn = localStorage.getItem("user");
+
+  if (showResult && isLoggedIn) {
     return (
       <div className="container-questions">
         <p>
           Fin du quizz, vous avez eu {score}/{questions.length} bonne(s)
           réponse(s).
         </p>
+        <button onClick={handleRegisterScore}>Enregistrer votre score</button>
         <Link to="/">
           <button>Retourner à l'accueil</button>
         </Link>
@@ -117,7 +140,20 @@ export default function Questions({ categorie }) {
     );
   }
 
-  const currentQuestion = questions[currentQuestionIndex];
+  if (showResult) {
+    return (
+      <div className="container-questions">
+        <p>
+          Fin du quizz, vous avez eu {score}/{questions.length} bonne(s)
+          réponse(s).
+        </p>
+        <button onClick={handleRegisterScore}>Enregistrer votre score</button>
+        <Link to="/">
+          <button>Retourner à l'accueil</button>
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="container-questions">
