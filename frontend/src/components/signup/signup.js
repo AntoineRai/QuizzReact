@@ -43,6 +43,7 @@ export default function LoginForm({ users }) {
 
   const handleLogOut = () => {
     localStorage.removeItem("user");
+    window.location.reload(false);
   };
 
   const isLoggedIn = localStorage.getItem("user");

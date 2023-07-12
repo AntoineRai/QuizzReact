@@ -6,6 +6,7 @@ import QuestionPage from "./pages/QuestionPage";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import LeaderboardPage from "./pages/LeaderboardPage";
+import ProfilPage from "./pages/ProfilPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/signin" element={<SignInPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/leaderboard" element={<LeaderboardPage />} />
+        <Route path="/profile" element={<ProfilPage />} />
       </Routes>
     </Router>
   );

@@ -53,7 +53,7 @@ export default function Questions({ categorie }) {
 
   function handleRegisterScore() {
     const scoreData = {
-      score: score,
+      score: score + " / " + questions.length,
       user: JSON.parse(isLoggedIn).name,
       categorie: categorie,
       date: new Date().toLocaleDateString(),
@@ -124,15 +124,15 @@ export default function Questions({ categorie }) {
   }
 
   const isLoggedIn = localStorage.getItem("user");
+  console.log(isLoggedIn)
 
-  if (showResult && isLoggedIn) {
+  if (isLoggedIn == null && showResult) {
     return (
       <div className="container-questions">
         <p>
           Fin du quizz, vous avez eu {score}/{questions.length} bonne(s)
           réponse(s).
         </p>
-        <button onClick={handleRegisterScore}>Enregistrer votre score</button>
         <Link to="/">
           <button>Retourner à l'accueil</button>
         </Link>
