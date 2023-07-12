@@ -12,19 +12,5 @@
 }
 
 .category-button {
-    background-color: #8CADA7;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    margin: 5px;
-    cursor: pointer;
-    border-radius: 5px;
-    width: 150px;
-    height: 50px;
-    transition: transform 0.3s ease-in-out;
-}
-
-.category-button:hover {
-    background-color: #708a86;
-    transform: scale(1.1);
+    padding: 20px 30px;
 }

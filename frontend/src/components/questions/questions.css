@@ -27,13 +27,3 @@
 .answer-button.selected {
   background-color: #739276;
 }
-
-button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 20px;
-  background-color: #739276;
-  color: #fff;
-  cursor: pointer;
-}
