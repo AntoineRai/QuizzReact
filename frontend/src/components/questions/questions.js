@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import "./questions.css";
 import Loading from "../../layout/loading/loading";
 
@@ -50,12 +51,27 @@ export default function Questions({ categorie }) {
     }
   }
 
+  function handleRegisterScore() {
+    const scoreData = {
+      score: score + " / " + questions.length,
+      user: JSON.parse(isLoggedIn).name,
+      categorie: categorie,
+      date: new Date().toLocaleDateString(),
+    };
+
+    const previousScores = JSON.parse(localStorage.getItem("score")) || [];
+
+    const updatedScores = [...previousScores, scoreData];
+
+    localStorage.setItem("score", JSON.stringify(updatedScores));
+  }
+
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/questions")
       .then((response) => response.json())
       .then((data) => {
         setLoading(false);
-        setQuestions(filterByCategorie(data, categorie).slice(0, 4));
+        setQuestions(filterByCategorie(data, categorie));
       })
       .catch((error) =>
         console.error("Erreur lors du fetch des questions:", error)
@@ -65,21 +81,22 @@ export default function Questions({ categorie }) {
   useEffect(() => {
     if (currentQuestionIndex < questions.length) {
       setTimeLeft(20);
-      setAllAnswers(
-        shuffleArray([
-          questions[currentQuestionIndex].reponse2,
-          questions[currentQuestionIndex].reponse3,
-          questions[currentQuestionIndex].reponse4,
-          questions[currentQuestionIndex].reponse5,
-          questions[currentQuestionIndex].reponse6,
-          questions[currentQuestionIndex].reponse7,
-          questions[currentQuestionIndex].reponse8,
-          questions[currentQuestionIndex].reponse9,
-          questions[currentQuestionIndex].reponse10,
-        ])
-          .slice(0, 3)
-          .concat(questions[currentQuestionIndex].reponse1)
-      );
+      const shuffledAnswers = shuffleArray([
+        questions[currentQuestionIndex].reponse2,
+        questions[currentQuestionIndex].reponse3,
+        questions[currentQuestionIndex].reponse4,
+        questions[currentQuestionIndex].reponse5,
+        questions[currentQuestionIndex].reponse6,
+        questions[currentQuestionIndex].reponse7,
+        questions[currentQuestionIndex].reponse8,
+        questions[currentQuestionIndex].reponse9,
+        questions[currentQuestionIndex].reponse10,
+      ])
+        .slice(0, 3)
+        .concat(questions[currentQuestionIndex].reponse1);
+
+      setAllAnswers(shuffleArray(shuffledAnswers));
+
       timerRef.current = setInterval(() => {
         setTimeLeft((prevTime) => {
           if (prevTime === 1) {
@@ -96,8 +113,31 @@ export default function Questions({ categorie }) {
     };
   }, [currentQuestionIndex, questions]);
 
+  const currentQuestion = questions[currentQuestionIndex];
+
   if (loading) {
-    return <Loading />;
+    return (
+      <div className="container-questions">
+        <Loading />
+      </div>
+    );
+  }
+
+  const isLoggedIn = localStorage.getItem("user");
+  console.log(isLoggedIn)
+
+  if (isLoggedIn == null && showResult) {
+    return (
+      <div className="container-questions">
+        <p>
+          Fin du quizz, vous avez eu {score}/{questions.length} bonne(s)
+          réponse(s).
+        </p>
+        <Link to="/">
+          <button>Retourner à l'accueil</button>
+        </Link>
+      </div>
+    );
   }
 
   if (showResult) {
@@ -107,11 +147,13 @@ export default function Questions({ categorie }) {
           Fin du quizz, vous avez eu {score}/{questions.length} bonne(s)
           réponse(s).
         </p>
+        <button onClick={handleRegisterScore}>Enregistrer votre score</button>
+        <Link to="/">
+          <button>Retourner à l'accueil</button>
+        </Link>
       </div>
     );
   }
-
-  const currentQuestion = questions[currentQuestionIndex];
 
   return (
     <div className="container-questions">

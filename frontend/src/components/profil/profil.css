@@ -1,0 +1,30 @@
+.container-profil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+.container-profil form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+.container-profil form div {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.container-profil form div label {
+    width: 100px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.container-profil form div input {
+    flex-grow: 1;
+    border-radius: 5px;
+    padding: 5px;
+}

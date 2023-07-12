@@ -22,6 +22,9 @@ export default function Category() {
 
   return (
     <div className="container-category">
+      <Link to="/">
+        <button>Retourner à l'accueil</button>
+      </Link>
       <h1>Choisir une catégorie :</h1>
       <ul className="categories-list">
         {loading ? (
